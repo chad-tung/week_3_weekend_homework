@@ -73,7 +73,7 @@ class Screening
         tickets GROUP BY tickets.screening_id ORDER BY COUNT(tickets.customer_id) DESC;"
         values = []
         result = SqlRunner.run(sql, values)
-        return result.map { |count| HeadCount.new(count) }
+        return result.map { |headcount| HeadCount.new(headcount) }[0]
     end
 
 end

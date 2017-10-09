@@ -4,11 +4,13 @@ require_relative '../models/films'
 require_relative '../models/screenings'
 require_relative '../models/tickets'
 require_relative '../models/items'
+require_relative '../models/screening_count'
 
 Ticket.delete_all()
 Screening.delete_all()
 Customer.delete_all()
 Film.delete_all()
+Item.delete_all()
 
 
 customer1 = Customer.new( {'name'=>'Chad', 'funds'=>1, 'age'=>25, 'student_status'=>true, 'items_purchased'=>[]} )
