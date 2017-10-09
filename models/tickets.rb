@@ -33,9 +33,8 @@ class Ticket
     end
 
     def update()
-        sql = "UPDATE tickets SET (customer_id, screening_id) =
-        ($1, $2) WHERE id = $3;"
-        values = [@customer_id , @screening_id, @id]
+        sql = "UPDATE tickets (customer_id, screening_id) WHERE id = $1;"
+        values = [@id]
         SqlRunner.run(sql, values)
     end
 
@@ -44,39 +43,5 @@ class Ticket
         values = [id]
         result = SqlRunner.run(sql, values)
         return result
-    end
-
-    def self.customer_films(customer)
-        sql = "SELECT films.* FROM films INNER JOIN screenings ON
-        films.id = screenings.film_id INNER JOIN tickets ON
-        tickets.screening_id = screenings.id WHERE tickets.customer_id = $1;"
-        values = [customer.id]
-        results = SqlRunner.run(sql, values)
-        return results.map { |film| Film.new(film)}
-    end
-
-    def self.customer_screenings(customer)
-        sql = "SELECT screenings.* FROM screenings INNER JOIN tickets ON
-        screenings.id = tickets.screening_id WHERE tickets.customer_id = $1;"
-        values = [customer.id]
-        results = SqlRunner.run(sql, values)
-        return results.map { |screening| Screening.new(screening) }
-    end
-
-    def self.film_customers(film)
-        sql = "SELECT customers.* FROM customers INNER JOIN tickets ON customers.id
-        = tickets.customer_id INNER JOIN screenings ON tickets.screening_id =
-        screenings.id WHERE screenings.film_id = $1;"
-        values = [film.id]
-        results = SqlRunner.run(sql, values)
-        return results.map { |customer| Customer.new(customer) }
-    end
-
-    def self.screening_customers(screening)
-        sql = "SELECT customers.* FROM customers INNER JOIN tickets ON customers.id =
-        tickets.customer_id WHERE tickets.screening_id = $1;"
-        values = [screening.id]
-        results = SqlRunner.run(sql, values)
-        return results.map { |customer| Customer.new(customer) }
     end
 end

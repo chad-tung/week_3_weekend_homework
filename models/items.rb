@@ -2,7 +2,7 @@ require_relative '../db/sql_runner'
 
 class Item
     attr_reader :id
-    attr_accessor :name, :price, :quantity
+    attr_accessor :name, :price, :stock_quantity
 
     def initialize(options)
         @id = options['id'].to_i if options['id']

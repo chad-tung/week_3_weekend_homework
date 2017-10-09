@@ -11,7 +11,7 @@ Customer.delete_all()
 Film.delete_all()
 
 
-customer1 = Customer.new( {'name'=>'Chad', 'funds'=>100, 'age'=>25, 'student_status'=>true, 'items_purchased'=>[]} )
+customer1 = Customer.new( {'name'=>'Chad', 'funds'=>1, 'age'=>25, 'student_status'=>true, 'items_purchased'=>[]} )
 customer1.save()
 
 customer2 = Customer.new( {'name'=>'Michael', 'funds'=>120, 'age'=>26, 'student_status'=>true, 'items_purchased'=>[]} )
@@ -35,7 +35,7 @@ customer7.save()
 customer8 = Customer.new( {'name'=>'Louise', 'funds'=>120, 'age'=>21, 'student_status'=>true, 'items_purchased'=>[]} )
 customer8.save()
 
-customer9 = Customer.new( {'name'=>'Tobi', 'funds'=>100, 'age'=>30, 'student_status'=>true, 'items_purchased'=>[]} )
+customer9 = Customer.new( {'name'=>'Taliyah', 'funds'=>100, 'age'=>31, 'student_status'=>true, 'items_purchased'=>[]} )
 customer9.save()
 
 customer10 = Customer.new( {'name'=>'Barney', 'funds'=>80, 'age'=>40, 'student_status'=>false, 'items_purchased'=>[]} )
@@ -163,6 +163,8 @@ item4.save()
 
 item5 = Item.new( {'name'=>'Water', 'price'=>2, 'stock_quantity'=>10} )
 item5.save()
+
+item6 = Item.new( {'name'=>'Ice Cream', 'price'=>4, 'stock_quantity'=>1} )
 
 binding.pry
 nil

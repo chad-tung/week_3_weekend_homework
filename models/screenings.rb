@@ -53,5 +53,27 @@ class Screening
         update()
     end
 
+    def customers()
+        sql = "SELECT customers.* FROM customers INNER JOIN tickets ON
+        customers.id = tickets.customer_id WHERE tickets.screening_id = $1;"
+        values = [@id]
+        result = SqlRunner.run(sql, values)
+        return result.map { |customer| Customer.new(customer) }
+    end
+
+    def customer_count()
+        return customers.count()
+    end
+
+########Wanna do a count on number of times an individual customer_id shows up for a showing id
+
+#This gives a table on psql, but I'm probs being a tool as it's like 3.30am and can't see the obvious answer
+    def self.popular_screening()
+        sql = "SELECT COUNT(tickets.customer_id), tickets.screening_id FROM
+        tickets GROUP BY tickets.screening_id ORDER BY COUNT(tickets.customer_id) DESC;"
+        values = []
+        result = SqlRunner.run(sql, values)
+        return result.map { |count| HeadCount.new(count) }
+    end
 
 end

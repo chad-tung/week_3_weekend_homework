@@ -65,6 +65,10 @@ class Customer
         return result.map { |ticket| Ticket.new(ticket) }
     end
 
+    def ticket_count()
+        return tickets.length()
+    end
+
     def screenings()
         sql = "SELECT screenings.* FROM tickets INNER JOIN screenings ON
         tickets.screening_id = screenings.id WHERE tickets.customer_id = $1;"
@@ -72,6 +76,8 @@ class Customer
         result = SqlRunner.run(sql, values)
         return result.map { |screening| Screening.new(screening) }
     end
+
+#################################################################################
 
     def film_price(screening)
         sql = "SELECT films.price FROM films INNER JOIN screenings ON
@@ -82,24 +88,40 @@ class Customer
     end
 
     def subtract_funds(purchase)
-        new_funds = @funds -= purchase
+        new_funds = @funds - purchase
         unless new_funds < 0
             @funds = new_funds
+            update()
+        else
+            false
         end
-        update()
     end
 
     def buy_ticket(screening)
-        subtract_funds(film_price(screening))
-        screening.decrease_seating()
-        ticket = Ticket.new( {'customer_id'=>@id, 'screening_id'=>screening.id()} )
-        ticket.save()
+        if screening.seatings = 0
+            return "Sorry, the booking for this showing is full."
+        end
+        unless subtract_funds(film_price(screening)) == false
+            subtract_funds(film_price(screening))
+            screening.decrease_seating()
+            ticket = Ticket.new( {'customer_id'=>@id, 'screening_id'=>screening.id()} )
+            ticket.save()
+        else
+            return "Customer funds insufficient"
+        end
     end
 
     def buy_item(item)
-        item.decrease_stock()
-        @items_purchased << item.name()
-        subtract_funds(item.price)
+        if item.stock_quantity == 0
+            return "Item out of stock."
+        end
+        unless subtract_funds(item.price) == false
+            item.decrease_stock()
+            @items_purchased << item.name()
+            subtract_funds(item.price)
+        else
+            return "Customer funds insufficient"
+        end
     end
 
 
