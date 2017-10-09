@@ -35,8 +35,8 @@ class Screening
     end
 
     def update()
-        sql = "INSERT INTO screenings (film_id, seatings, start_time,
-        day) VALUES ($1, $2, $3, $4) WHERE id = $5;"
+        sql = "UPDATE screenings SET (film_id, seatings, start_time,
+        day) = ($1, $2, $3, $4) WHERE id = $5;"
         values = [@film_id, @seatings, @start_time, @day, @id]
         SqlRunner.run(sql, values)
     end
@@ -47,5 +47,11 @@ class Screening
         result = SqlRunner.run(sql, values)
         return result.map { |screening| Screening.new(screening) }
     end
+
+    def decrease_seating()
+        @seatings -= 1
+        update()
+    end
+
 
 end
