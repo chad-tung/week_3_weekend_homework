@@ -145,6 +145,15 @@ ticket3.save()
 ticket4 = Ticket.new( {'customer_id'=>customer2.id(), 'screening_id'=>screening2.id()} )
 ticket4.save()
 
+ticket5 = Ticket.new( {'customer_id'=>customer3.id(), 'screening_id'=>screening1.id()} )
+ticket5.save()
+
+ticket6 = Ticket.new( {'customer_id'=>customer4.id(), 'screening_id'=>screening1.id()} )
+ticket6.save()
+
+ticket7 = Ticket.new( {'customer_id'=>customer5.id(), 'screening_id'=>screening1.id()} )
+ticket7.save()
+
 
 
 ################################################
